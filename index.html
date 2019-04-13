@@ -1,0 +1,104 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style media="screen">
+        .mainContent {
+            width: 90%;
+            max-width: 1024px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: sans-serif;
+        }
+        .panel {
+            width: 100%;
+            height: 35em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        textarea {
+            width: 100%;
+            height: 100%;
+            border: 2px solid;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+        textarea:focus {
+            border-color: #66afe9;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+            outline: 0 none;
+        }
+        button {
+            min-width: max-content;
+            min-height: max-content;
+        }
+        .submitBtn {
+            margin-left: 10px;
+            color: #fff;
+            background-color: #40AE4D;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border: 1px solid #40AE4D;
+            border-radius: .25rem;
+        }
+        .copyBtn {
+            margin-left: 10px;
+            color: #fff;
+            background-color: grey;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border: 1px solid grey;
+            border-radius: .25rem;
+        }
+        .subPanel {
+            display: flex;
+            width: 100%;
+            height: 50%;
+            margin: 10px;
+        }
+        .label {
+            width: 99%;
+            text-align: left;
+        }
+    </style>
+</head>
+
+
+<div class="mainContent">
+    <h1>Citation Alphabetizer</h1>
+    <p>Sorts input by line, ignoring indented lines.</p>
+    <div class="panel">
+        <div class="label">
+            <label>Input:</label>
+        </div>
+        <div class="subPanel">
+            <textarea id="input" autofocus></textarea>
+            <button type="button" class="submitBtn" onclick="onSubmit()">Alphabetize!</button>
+        </div>
+        <div class="label">
+            <label>Output:</label>
+        </div>
+        <div class="subPanel">
+            <textarea id="output" readonly></textarea>
+        </div>
+        <button type="button" class="copyBtn" onclick="copy()">Copy Results</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function onSubmit() {
+        let input = document.getElementById("input").value.split(/\n(?!\s)/g);
+        let output = input.sort((a, b) =>
+                a.toLowerCase().localeCompare(b.toLowerCase())
+            );
+        document.getElementById("output").value = output.join("\n");
+    }
+
+    function copy() {
+        document.getElementById("output").select();
+        document.execCommand("copy");
+    }
+</script>
